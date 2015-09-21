@@ -9,25 +9,28 @@ RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/bin/composer
 
 # Install app
+COPY docker-yii-apache /usr/bin/docker-yii-apache
 RUN rm -rf /var/www/*
+ADD . /var/www
+RUN  cd /var/www && /usr/bin/composer install
 
 # Configure apache
 RUN a2enmod rewrite
-RUN chown -R www-data:www-data /var/www
+RUN a2enmod headers
+RUN a2enmod expires
+RUN chmod 755 /usr/sbin/apache2ctl
+ADD /app/vhosts/apache.conf /etc/apache2/sites-available/default
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
 ENV APACHE_LOG_DIR /var/log/apache2
 
-ADD composer.json /var/www/composer.json
-
-
-ENV HOME /var/www
-WORKDIR /var/www
-
-RUN usermod -u 1000 www-data
-
-RUN composer install 
+RUN chown -R www-data:www-data /var/www
+RUN chmod 755 /var/www
 
 EXPOSE 80
 
-CMD ["/usr/sbin/apache2", "-D",  "FOREGROUND"]
+# CMD ["/usr/sbin/apache2", "-D",  "FOREGROUND"]
+RUN chmod +x /usr/bin/docker-yii-apache
+ENTRYPOINT ["/usr/bin/docker-yii-apache"]
+# CMD []
+# ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
