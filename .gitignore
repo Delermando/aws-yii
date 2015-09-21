@@ -1,2 +1,14 @@
+*.pyc
+application.config
+development.config
+.elasticbeanstalk/
+release/
+.idea/
+Dockerrun.local.json
 vendor/*
+.bash_history
 composer.lock
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

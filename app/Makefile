@@ -1,6 +1,6 @@
 run:
 	docker run -d --name db -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql:5.5;
-	docker run -d --name php --link db:mysql -p 80:80 -v `pwd`/app:/var/www/app -v `pwd`/app/vhosts/trunk.conf:/etc/apache2/sites-available/default teste10;
+	docker run -d --name php --link db:mysql -p 80:80 -v `pwd`:/var/www/html -v `pwd`/vhosts:/etc/apache2/vhosts 446433907ae6;
 	
 	
 runPhp:

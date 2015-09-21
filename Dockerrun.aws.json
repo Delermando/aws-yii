@@ -1,43 +1,13 @@
 {
-  "AWSEBDockerrunVersion": 2,
-  "volumes": [
+  "AWSEBDockerrunVersion": "1",
+  "Volumes": [
     {
-      "name": "php-app",
-      "host": {
-        "sourcePath": "/var/app/current/"
-      }
+      "ContainerDirectory": "/var/www/html",
+      "HostDirectory": "/var/app/yii"
     },
     {
-      "name": "apache",
-      "host": {
-        "sourcePath": "/var/app/current/vhosts"
-      }
-    }
-  ],
-  "containerDefinitions": [
-    {
-      "name": "php-app",
-      "image": "rtancman/php:php53-apache22",
-      "essential": true,
-      "memory": 128,
-      "portMappings": [
-        {
-          "hostPort": 8000,
-          "containerPort": 80
-        }
-      ],
-      "mountPoints": [
-        {
-          "sourceVolume": "php-app",
-          "containerPath": "/var/www/html",
-          "readOnly": false
-        },
-        {
-          "sourceVolume": "apache",
-          "containerPath": "/etc/apache2/vhosts",
-          "readOnly": false
-        }
-      ]
+      "ContainerDirectory": "/etc/apache2/vhosts",
+      "HostDirectory": "/var/app/vhosts"
     }
   ]
 }
