@@ -9,6 +9,7 @@ RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/bin/composer
 
 # Install app
+COPY docker-yii-apache /usr/bin/docker-yii-apache
 RUN rm -rf /var/www/*
 ADD . /var/www
 RUN  cd /var/www && /usr/bin/composer install
@@ -29,4 +30,7 @@ RUN chmod 755 /var/www
 EXPOSE 80
 
 # CMD ["/usr/sbin/apache2", "-D",  "FOREGROUND"]
-CMD ["docker-yii-apache"]
+RUN chmod +x /usr/bin/docker-yii-apache
+ENTRYPOINT ["/usr/bin/docker-yii-apache"]
+# CMD []
+# ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]

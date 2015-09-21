@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set -e
 
 # # Allow image to execute custom migrations before main migrations.
@@ -17,8 +17,11 @@ set -e
 # fi
     
 # Modify folder permissions.
+mkdir -p /var/www/app/yii/protected/runtime
+mkdir -p /var/www/app/yii/assets
 chown www-data:www-data /var/www/app/yii/protected/runtime
 chown www-data:www-data /var/www/app/yii/assets
+
 
 # # Allow image to execute custom arbitrary commands before start.
 # if [ -f /var/www/yii2site/docker/beforestart ]; then
@@ -26,7 +29,7 @@ chown www-data:www-data /var/www/app/yii/assets
 # fi
 
 # Apache gets grumpy about PID files pre-existing.
-rm -f /var/run/apache2/apache2.pid
+# rm -f /var/run/apache2/apache2.pid
 
 # Start!
 exec /usr/sbin/apache2ctl -D FOREGROUND
